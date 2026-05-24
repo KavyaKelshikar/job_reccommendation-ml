@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Prediction History{% endblock %}
+
+{% block content %}
+
+<div class="history-container">
+    <div class="history-header">
+        <h1 class="page-title">Prediction History</h1>
+        <p class="page-description">View all your previous job role predictions and track your career insights.</p>
+    </div>
+
+    {% if data %}
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <p class="metric-label">Total Analyses</p>
+            <strong class="metric-value">{{ data|length }}</strong>
+        </div>
+        <div class="metric-card">
+            <p class="metric-label">Avg. Confidence</p>
+            <strong class="metric-value">{{ avg_confidence }}%</strong>
+        </div>
+        <div class="metric-card">
+            <p class="metric-label">Top Domain</p>
+            <strong class="metric-value">{{ top_domain }}</strong>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Resume File</th>
+                    <th>Predicted Role</th>
+                    <th>Confidence Level</th>
+                    <th>Detected Skills</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td class="history-file"><span class="file-icon">📄</span>{{ row[0] }}</td>
+                    <td><span class="role-pill">{{ row[1] }}</span></td>
+                    <td><span class="confidence-bar">{{ row[2] }}%</span></td>
+                    <td><span class="skill-pill">{{ row[3] }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="market-pulse-card">
+        <div class="pulse-icon">✨</div>
+        <div class="pulse-content">
+            <h3>Market Pulse Suggestion</h3>
+            <p>Based on your history, there's an 84% increase in demand for candidates with both Python and Agile
+                certifications. Consider cross-referencing your last 3 analyses to optimize for "Technical Product
+                Owner" roles.</p>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <h3>No predictions yet</h3>
+        <p>Upload a resume and get your first prediction to see history here!</p>
+        <a href="{{ url_for('upload') }}" class="btn primary-btn">Upload Resume</a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<section class="dashboard-hero">
+    <div class="hero-panel">
+        <div class="hero-badge">Home</div>
+        <h1 class="hero-title">Hello {{ username | upper }}</h1>
+        <p class="hero-copy">Your career narrative is evolving. Based on your recent uploads, we’ve curated new role predictions for your next move.</p>
+
+        <div class="hero-stats">
+            <div class="metrics-card">
+                <span class="metric-label">Predictions Made</span>
+                <strong>{{ predictions }}</strong>
+            </div>
+            <div class="metrics-card">
+                <span class="metric-label">Resumes Uploaded</span>
+                <strong>{{ resumes }}</strong>
+            </div>
+            <div class="metrics-card badge-card">
+                <span class="metric-label">AI Readiness</span>
+                <strong>{{ ai_readiness }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <aside class="summary-card">
+        <div class="summary-top">
+            <span class="summary-label">Resume Activity</span>
+            <h2>{{ resumes }} Uploaded Resumes</h2>
+        </div>
+        <div class="summary-body">
+            <p>Keep your resume library updated to get better role recommendations and faster insights.</p>
+            <a href="{{ url_for('upload') }}" class="btn primary-btn">Add New Source</a>
+        </div>
+    </aside>
+</section>
+
+<section class="recent-section">
+    <div class="section-heading">
+        <div>
+            <h2>Recent Role Predictions</h2>
+            <p>Explore your latest predictions and confidence levels.</p>
+        </div>
+        <a href="{{ url_for('history') }}" class="link">View All History →</a>
+    </div>
+
+    <div class="recent-grid">
+        {% if recent_predictions %}
+            {% for row in recent_predictions %}
+            <article class="role-card">
+                <div class="role-card-head">
+                    <span class="role-chip">{{ row[1] }}</span>
+                    <span class="confidence-chip">{{ row[2] }}% match</span>
+                </div>
+                <p class="role-meta">Resume: {{ row[0] }}</p>
+                <p class="role-skills">Skills detected: {{ row[3] }}</p>
+            </article>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state-card">
+                <h3>No recent predictions yet</h3>
+                <p>Upload a resume and generate your first role prediction to see it here.</p>
+                <a href="{{ url_for('upload') }}" class="btn secondary-btn">Upload Resume</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="analytics-section">
+    <div class="analytics-header">
+        <div>
+            <h2>Predictive Analytics</h2>
+            <p>A data-driven view of your career progression and role distribution.</p>
+        </div>
+    </div>
+    <div class="analytics-grid">
+        <div class="chart-card">
+            <h3>Prediction Confidence Trend</h3>
+            <canvas id="confidenceChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h3>Role Categories Distribution</h3>
+            <canvas id="roleDistributionChart"></canvas>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Prediction Confidence Trend Chart
+    const confidenceCtx = document.getElementById('confidenceChart').getContext('2d');
+    new Chart(confidenceCtx, {
+        type: 'line',
+        data: {
+            labels: {{ chart_labels | tojson }},
+            datasets: [{
+                label: 'AI Confidence (%)',
+                data: {{ chart_confidences | tojson }},
+                borderColor: '#3498db',
+                backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointRadius: 5,
+                pointHoverRadius: 8,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#3498db'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: { color: 'rgba(0,0,0,0.05)' }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            }
+        }
+    });
+
+    // Role Distribution Chart
+    const distributionCtx = document.getElementById('roleDistributionChart').getContext('2d');
+    new Chart(distributionCtx, {
+        type: 'doughnut',
+        data: {
+            labels: {{ pie_labels | tojson }},
+            datasets: [{
+                data: {{ pie_values | tojson }},
+                backgroundColor: [
+                    '#3498db', '#6366f1', '#10b981', '#f59e0b', '#ef4444', 
+                    '#8b5cf6', '#ec4899', '#14b8a6', '#f43f5e'
+                ],
+                borderWidth: 0,
+                hoverOffset: 20
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true,
+                        font: { size: 12, weight: '600' }
+                    }
+                }
+            },
+            cutout: '70%'
+        }
+    });
+});
+</script>
+
+<section class="insight-section">
+    <div class="insight-card">
+        <h3>Level Up Your Profile</h3>
+        <p>Ensure your resume contains top technical keywords. Our engine scans for core competencies like Python, SQL, and JavaScript to match you with top developer and data roles.</p>
+        <a href="{{ url_for('upload') }}" class="btn primary-btn">Upload Updated Resume</a>
+    </div>
+    <div class="skill-grid">
+        <span class="skill-pill top">AI Readiness</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">Java</span>
+        <span class="skill-pill">HTML / CSS</span>
+        <span class="skill-pill">JavaScript</span>
+        <span class="skill-pill">SQL</span>
+        <span class="skill-pill">Machine Learning</span>
+        <span class="skill-pill">React</span>
+    </div>
+</section>
+
+{% endblock %}

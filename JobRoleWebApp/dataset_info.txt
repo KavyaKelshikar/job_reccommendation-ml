@@ -1,0 +1,35 @@
+Shape: (2484, 4)
+Columns: ['ID', 'Resume_str', 'Resume_html', 'Category']
+Missing values:
+ID             0
+Resume_str     0
+Resume_html    0
+Category       0
+dtype: int64
+Category Value Counts:
+Category
+INFORMATION-TECHNOLOGY    120
+BUSINESS-DEVELOPMENT      120
+ADVOCATE                  118
+CHEF                      118
+FINANCE                   118
+ENGINEERING               118
+ACCOUNTANT                118
+FITNESS                   117
+AVIATION                  117
+SALES                     116
+HEALTHCARE                115
+CONSULTANT                115
+BANKING                   115
+CONSTRUCTION              112
+PUBLIC-RELATIONS          111
+HR                        110
+DESIGNER                  107
+ARTS                      103
+TEACHER                   102
+APPAREL                    97
+DIGITAL-MEDIA              96
+AGRICULTURE                63
+AUTOMOBILE                 36
+BPO                        22
+Name: count, dtype: int64

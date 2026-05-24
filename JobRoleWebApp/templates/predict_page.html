@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Predict Job Role{% endblock %}
+
+{% block content %}
+
+<div class="predict-hero">
+    <span class="eyebrow-label">RESUME ANALYSIS</span>
+    <h1 class="predict-title">Discover Your Path.</h1>
+    <p class="predict-copy">Utilize our machine learning prediction engine to decode your career trajectory and align your unique skills with the most suitable roles for your profile.</p>
+</div>
+
+<!-- Flash messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+{% if resumes %}
+<div class="predict-layout">
+    <div class="predict-left">
+        <div class="analysis-card">
+            <div class="analysis-card-header">
+                <p class="analysis-label">Select Resume for Analysis</p>
+                <p class="analysis-subtitle">Choose your latest profile to start the curation.</p>
+            </div>
+            <form method="POST" class="predict-form">
+                <label class="form-field-label">Current Artifacts</label>
+                <div class="resume-selector">
+                    <select name="resume" class="form-select" required>
+                        <option value="">-- Select Resume --</option>
+                        {% for resume in resumes %}
+                        <option value="{{ resume.filename }}">{{ resume.filename }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="resume-arrow">▾</span>
+                </div>
+                <button type="submit" class="btn primary-btn predict-submit">Generate Prediction ✨</button>
+            </form>
+        </div>
+    </div>
+
+    <aside class="predict-right">
+        <div class="insight-card">
+            <div class="insight-badge">SMART ANALYSIS</div>
+            <h3 class="insight-title">Classifying profiles across 15+ high-demand industry roles.</h3>
+        </div>
+    </aside>
+</div>
+
+<section class="architecture-section">
+    <div class="architecture-header">
+        <div>
+            <h2>Intelligence Architecture</h2>
+            <p>Our multi-layered analysis ensures career precision.</p>
+        </div>
+        <a href="#" class="architecture-link">Methodology Details →</a>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h4>ML Role Prediction</h4>
+            <p>Predicts your optimal job role and top alternative career paths using machine learning categorization.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h4>Skill Gap Analysis</h4>
+            <p>Matches your detected skills against industry requirements to highlight missing competencies.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h4>Market Insights</h4>
+            <p>Provides current job demand levels and standard salary ranges for your predicted career trajectory.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h4>Actionable Advice</h4>
+            <p>Generates targeted recommendations and educational steps to improve your profile's job readiness.</p>
+        </div>
+    </div>
+</section>
+{% else %}
+<div class="empty-state">
+    <h3>No Resumes Available</h3>
+    <p>You need to upload a resume first before you can get predictions.</p>
+    <a href="{{ url_for('upload') }}" class="btn primary-btn">📤 Upload Resume</a>
+</div>
+{% endif %}
+
+{% endblock %}

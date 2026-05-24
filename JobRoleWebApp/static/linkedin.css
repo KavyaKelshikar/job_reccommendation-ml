@@ -1,0 +1,322 @@
+/* LinkedIn-inspired Professional Theme */
+
+/* Professional Color Palette */
+:root {
+    --linkedin-blue: #0077b5;
+    --linkedin-light-blue: #4facfe;
+    --linkedin-dark-blue: #005885;
+    --linkedin-gray: #f3f2ef;
+    --linkedin-text: #333333;
+    --linkedin-text-light: #666666;
+    --linkedin-white: #ffffff;
+    --linkedin-border: #e1e9ee;
+}
+
+/* Professional Body */
+body.linkedin-theme {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: var(--linkedin-gray);
+    color: var(--linkedin-text);
+    line-height: 1.6;
+}
+
+/* Professional Header */
+.linkedin-header {
+    background: var(--linkedin-white);
+    border-bottom: 1px solid var(--linkedin-border);
+    padding: 12px 24px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.linkedin-header .logo {
+    color: var(--linkedin-blue);
+    font-size: 24px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.linkedin-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.linkedin-nav a {
+    color: var(--linkedin-text-light);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.linkedin-nav a:hover {
+    background: var(--linkedin-gray);
+    color: var(--linkedin-blue);
+}
+
+/* Professional Card */
+.linkedin-card {
+    background: var(--linkedin-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid var(--linkedin-border);
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.linkedin-card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--linkedin-border);
+}
+
+.linkedin-card-body {
+    padding: 20px;
+}
+
+/* Profile Section */
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--linkedin-blue), var(--linkedin-light-blue));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.profile-info h2 {
+    margin: 0 0 4px 0;
+    color: var(--linkedin-text);
+    font-size: 20px;
+}
+
+.profile-info p {
+    margin: 0;
+    color: var(--linkedin-text-light);
+    font-size: 16px;
+}
+
+/* Skills Section */
+.skills-section {
+    margin-bottom: 20px;
+}
+
+.skills-section h3 {
+    color: var(--linkedin-text);
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    background: var(--linkedin-gray);
+    color: var(--linkedin-text);
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid var(--linkedin-border);
+}
+
+/* Experience Section */
+.experience-item {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--linkedin-border);
+}
+
+.experience-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.experience-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--linkedin-text);
+    margin-bottom: 4px;
+}
+
+.experience-company {
+    color: var(--linkedin-blue);
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.experience-duration {
+    color: var(--linkedin-text-light);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.experience-description {
+    color: var(--linkedin-text);
+    line-height: 1.5;
+}
+
+/* Recommendations */
+.recommendations {
+    margin-top: 24px;
+}
+
+.recommendation-card {
+    background: var(--linkedin-white);
+    border: 1px solid var(--linkedin-border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.recommendation-text {
+    font-style: italic;
+    color: var(--linkedin-text);
+    margin-bottom: 8px;
+}
+
+.recommendation-author {
+    color: var(--linkedin-text-light);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Professional Buttons */
+.linkedin-btn {
+    background: var(--linkedin-blue);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.linkedin-btn:hover {
+    background: var(--linkedin-dark-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.linkedin-btn-secondary {
+    background: transparent;
+    color: var(--linkedin-blue);
+    border: 1px solid var(--linkedin-blue);
+}
+
+.linkedin-btn-secondary:hover {
+    background: var(--linkedin-blue);
+    color: white;
+}
+
+/* Feed Style */
+.feed-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.feed-post {
+    background: var(--linkedin-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid var(--linkedin-border);
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.feed-post-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--linkedin-border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.feed-post-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--linkedin-gray);
+}
+
+.feed-post-meta {
+    flex: 1;
+}
+
+.feed-post-author {
+    font-weight: 600;
+    color: var(--linkedin-text);
+    margin-bottom: 2px;
+}
+
+.feed-post-time {
+    color: var(--linkedin-text-light);
+    font-size: 14px;
+}
+
+.feed-post-content {
+    padding: 20px;
+}
+
+.feed-post-actions {
+    padding: 12px 20px;
+    border-top: 1px solid var(--linkedin-border);
+    display: flex;
+    gap: 20px;
+}
+
+.feed-action {
+    color: var(--linkedin-text-light);
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.feed-action:hover {
+    color: var(--linkedin-blue);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .skill-tags {
+        justify-content: center;
+    }
+
+    .linkedin-nav {
+        display: none;
+    }
+
+    .feed-container {
+        padding: 10px;
+    }
+}

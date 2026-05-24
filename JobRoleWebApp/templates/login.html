@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-wrap">
+        <div class="container auth-card">
+            <div class="brand-label">AI Job Recommendation System</div>
+            <h2>Welcome Back</h2>
+            <p class="page-subtitle">Sign in to access your personalized career insights.</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="footer-link">Don’t have an account? <a class="link" href="{{ url_for('signup') }}">Sign Up</a></div>
+        </div>
+    </div>
+</body>
+</html>

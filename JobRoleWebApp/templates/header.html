@@ -1,0 +1,27 @@
+<header class="top-header">
+    <div class="header-left">
+        <div class="logo">
+            <img src="https://ui-avatars.com/api/?name=EI&background=transparent&color=1a2542&size=32&bold=true" style="height:24px; vertical-align:middle;" alt="logo"> Career Curator
+        </div>
+    </div>
+    
+    <div class="header-nav">
+        <a href="{{ url_for('upload') }}" class="nav-link {{ 'active' if request.endpoint == 'upload' }}">Upload Resume</a>
+        <a href="{{ url_for('predict_page') }}" class="nav-link {{ 'active' if request.endpoint == 'predict_page' }}">Predict Role</a>
+        <a href="{{ url_for('history') }}" class="nav-link {{ 'active' if request.endpoint == 'history' }}">History</a>
+    </div>
+
+    <div class="header-right">
+        <button class="icon-btn bell-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.63 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16Z" fill="#1a2542"/></svg>
+        </button>
+        <button class="icon-btn settings-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M19.14 12.94C19.18 12.63 19.2 12.32 19.2 12C19.2 11.68 19.18 11.37 19.14 11.06L21.16 9.48C21.34 9.34 21.39 9.08 21.28 8.88L19.36 5.56C19.25 5.36 19 5.29 18.8 5.37L16.42 6.33C15.93 5.95 15.39 5.64 14.81 5.4L14.45 2.87C14.42 2.64 14.22 2.47 13.99 2.47H10.01C9.78 2.47 9.58 2.64 9.55 2.87L9.19 5.4C8.61 5.64 8.07 5.95 7.58 6.33L5.2 5.37C5 5.29 4.75 5.36 4.64 5.56L2.72 8.88C2.61 9.08 2.66 9.34 2.84 9.48L4.86 11.06C4.82 11.37 4.8 11.68 4.8 12C4.8 12.32 4.82 12.63 4.86 12.94L2.84 14.52C2.66 14.66 2.61 14.92 2.72 15.12L4.64 18.44C4.75 18.64 5 18.71 5.2 18.63L7.58 17.67C8.07 18.05 8.61 18.36 9.19 18.6L9.55 21.13C9.58 21.36 9.78 21.53 10.01 21.53H13.99C14.22 21.53 14.42 21.36 14.45 21.13L14.81 18.6C15.39 18.36 15.93 18.05 16.42 17.67L18.8 18.63C19 18.71 19.25 18.64 19.36 18.44L21.28 15.12C21.39 14.92 21.34 14.66 21.16 14.52L19.14 12.94ZM12 15.6C10.01 15.6 8.4 13.99 8.4 12C8.4 10.01 10.01 8.4 12 8.4C13.99 8.4 15.6 10.01 15.6 12C15.6 13.99 13.99 15.6 12 15.6Z" fill="#1a2542"/></svg>
+        </button>
+        {% if session.user %}
+        <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name={{ session.user }}&background=231f20&color=fff&size=36" alt="avatar" style="border-radius: 50%;">
+        </div>
+        {% endif %}
+    </div>
+</header>

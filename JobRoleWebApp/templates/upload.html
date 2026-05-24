@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Resume{% endblock %}
+
+{% block content %}
+
+<div class="upload-hero">
+    <h1 class="upload-headline">Elevate Your Story.</h1>
+    <p class="upload-subheading">Our AI analyzes your professional narrative to discover the perfect career trajectory. Upload your resume to begin the curation process.</p>
+</div>
+
+<div class="upload-layout">
+    <!-- LEFT COLUMN: UPLOAD FORM -->
+    <div class="upload-left">
+        <div class="manuscript-card">
+            <h2 class="manuscript-title">Resume Manuscript</h2>
+            
+            <div class="file-upload-area" id="fileUploadArea">
+                <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="16" width="40" height="40" rx="8" fill="#E8F0FF" stroke="#2b67a7" stroke-width="2"/>
+                    <path d="M28 24V40M24 36H32" stroke="#2b67a7" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h3>Choose File</h3>
+                <p>PDF (Max 10MB)</p>
+            </div>
+            
+            <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data" class="upload-form-new" id="uploadForm">
+                <input type="file" name="resume" accept=".pdf" required class="file-input-hidden" id="fileInput">
+                <button type="submit" class="btn primary-btn upload-btn">⬆ Upload Resume</button>
+            </form>
+
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div class="messages-container">
+                  {% for category, message in messages %}
+                    <p class="flash {{ category }}">{{ message }}</p>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <!-- RIGHT COLUMN: UPLOADED RESUMES + AI RECOMMENDATION -->
+    <div class="upload-right">
+        <div class="library-card">
+            <div class="library-header">
+                <h2 class="library-title">Your Uploaded Resumes</h2>
+                <span class="library-badge">LIBRARY</span>
+            </div>
+
+            {% if resumes %}
+                <div class="resumes-library">
+                    {% for r in resumes %}
+                        <div class="resume-library-item">
+                            <div class="resume-file-icon">📄</div>
+                            <div class="resume-file-info">
+                                <p class="resume-file-name">{{ r.filename }}</p>
+                                <p class="resume-file-time">Added on {{ r.uploaded_at or "Recently" }}</p>
+                            </div>
+                            <div class="resume-file-actions">
+                                <a href="{{ url_for('predict_page') }}" class="action-icon" title="Predict role">✓</a>
+                                <form action="{{ url_for('delete_resume') }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this resume?');">
+                                    <input type="hidden" name="filename" value="{{ r.filename }}">
+                                    <button type="submit" class="action-icon delete-icon" title="Delete">🗑</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state-library">
+                    <p>"The future depends on what you do today."</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="ai-recommendation-card">
+            <div class="ai-rec-header">
+                <span class="ai-rec-label">💡 AI RECOMMENDATION</span>
+            </div>
+            <p class="ai-rec-text">Resumes with clear <strong>quantifiable metrics</strong> result in 42% more accurate role predictions.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileUploadArea = document.getElementById('fileUploadArea');
+    const fileInput = document.getElementById('fileInput');
+
+    if (fileUploadArea && fileInput) {
+        // Click on upload area opens file picker
+        fileUploadArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // Update UI when file is selected
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files && e.target.files.length > 0) {
+                const fileName = e.target.files[0].name;
+                console.log('File selected:', fileName);
+            }
+        });
+
+        // Drag and drop functionality
+        fileUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            fileUploadArea.style.opacity = '0.7';
+        });
+
+        fileUploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            fileUploadArea.style.opacity = '1';
+        });
+
+        fileUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            fileUploadArea.style.opacity = '1';
+            
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                fileInput.files = e.dataTransfer.files;
+            }
+        });
+
+        // Make upload area cursor pointer
+        fileUploadArea.style.cursor = 'pointer';
+    }
+});
+</script>
+
+{% endblock %}
