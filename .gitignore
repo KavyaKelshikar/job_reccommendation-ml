@@ -1,8 +1,7 @@
-﻿# Ignore generated files and large binaries
+# Ignore generated files and large binaries
 JobRoleWebApp.zip
 JobRoleWebApp/__pycache__/
 JobRoleWebApp/database.db
-JobRoleWebApp/model.pkl
 JobRoleWebApp/dataset/resume.csv
 *.pyc
 .venv/
