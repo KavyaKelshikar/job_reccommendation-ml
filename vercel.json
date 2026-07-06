@@ -3,7 +3,10 @@
   "builds": [
     {
       "src": "JobRoleWebApp/app.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "includeFiles": "JobRoleWebApp/**"
+      }
     }
   ],
   "routes": [
