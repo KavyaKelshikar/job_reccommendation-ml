@@ -1,10 +1,25 @@
 from pydoc import text
+import os
+import sqlite3
+
+# ---------------- VERCEL SQLITE COMPATIBILITY ----------------
+if os.environ.get("VERCEL") == "1":
+    _original_connect = sqlite3.connect
+    def vercel_connect(database, *args, **kwargs):
+        if database == "database.db":
+            tmp_db_path = "/tmp/database.db"
+            if not os.path.exists(tmp_db_path):
+                src_db_path = os.path.join(os.path.dirname(__file__), "database.db")
+                if os.path.exists(src_db_path):
+                    import shutil
+                    shutil.copy(src_db_path, tmp_db_path)
+            database = tmp_db_path
+        return _original_connect(database, *args, **kwargs)
+    sqlite3.connect = vercel_connect
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-import sqlite3
 import re
 from pypdf import PdfReader
-import os
 import joblib
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -13,12 +28,16 @@ import io
 
 # ---------------- INIT ----------------
 
-app = Flask(__name__)
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(__name__,
+            template_folder=os.path.join(base_dir, 'templates'),
+            static_folder=os.path.join(base_dir, 'static'))
 app.secret_key = "test123"
 
 
-model = joblib.load("model.pkl")
-vectorizer = joblib.load("vectorizer.pkl")
+model = joblib.load(os.path.join(base_dir, "model.pkl"))
+vectorizer = joblib.load(os.path.join(base_dir, "vectorizer.pkl"))
 
 
 # ---------------- PDF TEXT EXTRACTION ----------------
@@ -209,7 +228,7 @@ def dashboard():
 
 # ---------------- UPLOAD PAGE ----------------
 
-UPLOAD_FOLDER = "uploads"
+UPLOAD_FOLDER = "/tmp/uploads" if os.environ.get("VERCEL") == "1" else os.path.join(base_dir, "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {"pdf"}
